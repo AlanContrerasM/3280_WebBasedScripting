@@ -21,7 +21,7 @@
     }
     asort($emails);//asort is for array, ascending, arsort, descending
     foreach($emails as $email_addr => $email_count){
-        $output_str .= $email_addr . ',' . $email_count . "\n";
+        $output_str .= $email_addr . ', ' . $email_count . "\n";
     }
     if($out_f = fopen($output_file, 'w')){
         if(fwrite($out_f, $output_str) === false){

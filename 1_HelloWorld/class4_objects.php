@@ -51,6 +51,7 @@
 
     //static stuff
     $sizes = Entree::getSizes();
+    //Test::$x=5;
 
 
     //constructor
