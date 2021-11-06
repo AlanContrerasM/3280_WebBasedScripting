@@ -65,6 +65,14 @@ print '<br/>';
 print '<br/>';
 print '<br/>';
 
+
+
+
+
+
+
+
+
 //try to use this format
 
 if('POST' == $_SERVER['REQUEST_METHOD']){
@@ -129,7 +137,7 @@ function validate_form1(){
     if($inputs['name'] = trim($_POST['my_name']) ?? ''){
         if(strlen($inputs['name'] ==0)){
             $errors[] = "Your name must not be empty";
-        }elseif(strlen($inputs['name'] ==0)){
+        }elseif(strlen($inputs['name'] < 3)){
             $errors[] = "Your name must be at least 3 letters long";
         }
 

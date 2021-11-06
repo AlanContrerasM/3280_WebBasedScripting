@@ -85,6 +85,14 @@
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $q = $db->exec("UPDATE dishes SET is_spicy = 1
                             WHERE dish_id = 1");
+
+            //to sanitize, or be careful about wildcards
+            //dealing with wildcards, specially with update or delete
+            $dish = $db->quote($_POST['dish_search']);
+            //string replace
+            $dish = strtr($dish, array('_' => '\_', '%' => '\%'));
+            //now $dish is sanitized and can be interpolated right on the query
+            $stmt = $db->query("SELECT dish_name, price FROM dishes WHERE dish_name LIKE $dish");
         }catch(PDOException $e){
             print "Couldn't update table: " . $e->getMessage();
         }
@@ -98,6 +106,14 @@
 
             //remove al dishes
             // $q = $db->exec("DELETE FROM dishes");
+            
+            //to sanitize, or be careful about wildcards
+            //dealing with wildcards, specially with update or delete
+            $dish = $db->quote($_POST['dish_search']);
+            //string replace
+            $dish = strtr($dish, array('_' => '\_', '%' => '\%'));
+            //now $dish is sanitized and can be interpolated right on the query
+            $stmt = $db->query("SELECT dish_name, price FROM dishes WHERE dish_name LIKE $dish");
         }catch(PDOException $e){
             print "Couldn't update table: " . $e->getMessage();
         }
@@ -112,7 +128,77 @@
             //this is dangerous as its open for sql injection, also if there is an extra ' or " it can also mess you up
             //clean it first
         }catch(PDOException $e){
-            print "Couldn't update table: " . $e->getMessage();
+            print "Couldn't insert into table: " . $e->getMessage();
+        }
+    }
+
+    //inserting safely
+    function insert_from_form_sanitized(){
+        //we use prepared statements
+        try{
+
+            //before all this remember to always validate data in your form functions, these are extra safety measures
+            $db = new PDO('mysql:host=localhost;dbname=test','test', 'test');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            //we have to clean our $_POST info received.
+
+            //note prepare followed by execute
+            //question mark is place holder
+            $q = $db->prepare("INSERT INTO dishes (dish_name) VALUES('?')");
+            $q->execute(array($_POST['new_dish_name']));
+
+            $q = $db->prepare("INSERT INTO dishes (dish_name) VALUES('?,?,?')");
+            $q->execute(array($_POST['new_dish_name'], $_POST['new_price'], $_POST['is_spicy']));
+            
+            
+
+
+        }catch(PDOException $e){
+            print "Couldn't insert into table: " . $e->getMessage();
+        }
+    }
+
+
+
+     //retrieving data
+     function retrieve_data(){
+        //we use prepared statements
+        try{
+            $db = new PDO('mysql:host=localhost;dbname=test','test', 'test');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            
+            //by default fetch mode gives associative values and index
+            $q = $db->query("SELECT dish_name, price FROM dishes");
+            while ($row = $q->fetch()){
+                print "$row[dish_name], $row[price] \n";
+            }
+
+            //with fetch num mode
+            $q = $db->query("SELECT dish_name, price FROM dishes");
+            while ($row = $q->fetch(PDO::FETCH_NUM)){
+                print implode(", ", $row) . "\n";
+            }
+
+            //with fetch obj mode
+            $q = $db->query("SELECT dish_name, price FROM dishes");
+            while ($row = $q->fetch(PDO::FETCH_OBJ)){
+                print "{$row->dish_name} has price {$row->price} \n";
+            }
+
+            //fetch doesnt give give you number of rows, if you want them
+            //SELECT COUNT(*) FROM dishes WHERE dish_name LIKE '%pizza%'
+
+            //retrieving safely 
+            //dealing with wildcards, specially with update or delete
+            $dish = $db->quote($_POST['dish_search']);
+            //string replace
+            $dish = strtr($dish, array('_' => '\_', '%' => '\%'));
+            //now $dish is sanitized and can be interpolated right on the query
+            $stmt = $db->query("SELECT dish_name, price FROM dishes WHERE dish_name LIKE $dish");
+            
+        }catch(PDOException $e){
+            print "Couldn't select from table: " . $e->getMessage();
         }
     }
 

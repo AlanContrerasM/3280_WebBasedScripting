@@ -10,3 +10,4 @@ cd /opt/lampp/htdocs/3280_WebBasedScripting/
 
 http://localhost/3280_WebBasedScripting/
 localhost:80
+http://localhost/dashboard/
