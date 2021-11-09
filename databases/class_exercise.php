@@ -273,13 +273,30 @@ require 'lib.php';
                     print "<br/>";
                     
                     // $q = $db->prepare("SELECT dish_id, dish_name, price, is_spicy FROM dishes WHERE dish_name = ?");
-                    // $q->execute(array($dish));
+                    // $q->execute([$dish]);
                     $q = $db->query("SELECT * FROM dishes WHERE dish_name = $dish");
-           
-                    
                     while ($row = $q->fetch()){
+                        print "executed";//its never getting executed, so row is empty
+
+
                         print "$row[dish_name], \$$row[price], spicyness $row[is_spicy] <br/>";
                     }
+
+                    // if(empty($row)){print "empty";};
+
+
+                    // if($q->execute([$dish])){
+                        
+                    //     while ($row = $q->fetch()){
+                    //         print "$row[dish_name], \$$row[price], spicyness $row[is_spicy] <br/>";
+                    //     }
+                    // }else{
+                    //     print "Error";
+                    // }
+                    
+                    // while ($row = $q->fetch()){
+                    //     print "$row[dish_name], \$$row[price], spicyness $row[is_spicy] <br/>";
+                    // }
 
                 }catch(PDOException $e){
                     print "Couldn't find that choice: " . $e->getMessage();
