@@ -264,22 +264,35 @@ require 'lib.php';
 
             foreach ($inputs as $choice){
                 try{
-                    // prepare and sanitize querys wildcards for strings, not needed here since its number
+                    // prepare and sanitize querys wildcards for strings, only needed when not using prepared statements.
                     $dish = $db->quote($choice);
                     //string replace
                     $dish = strtr($dish, array('_' => '\_', '%' => '\%'));
 
                     print $dish;
                     print "<br/>";
+                    //check prof provided examples
+                    $q = $db->prepare("SELECT dish_id, dish_name, price, is_spicy FROM dishes WHERE dish_name LIKE ?");
+                    // $q->execute([$dish]); //maybe not working since quote adds quotes.... yep... 
+                    $q->execute([$choice]);
                     
-                    // $q = $db->prepare("SELECT dish_id, dish_name, price, is_spicy FROM dishes WHERE dish_name = ?");
-                    // $q->execute([$dish]);
-                    $q = $db->query("SELECT * FROM dishes WHERE dish_name = $dish");
-                    while ($row = $q->fetch()){
-                        print "executed";//its never getting executed, so row is empty
+                    // $q = $db->query("SELECT * FROM dishes WHERE dish_name = $dish"); //if not using prepared statements this work.
+                    
+                    
+                    $dishes = $q->fetchAll();
 
-
-                        print "$row[dish_name], \$$row[price], spicyness $row[is_spicy] <br/>";
+                    if (count($dishes) == 0) {
+                        print 'No dishes matched.';
+                    } else {
+                        
+                        foreach ($dishes as $dish) {
+                            if ($dish->is_spicy == 1) {
+                                $spicy = 'Yes';
+                            } else {
+                                $spicy = 'No';
+                            }
+                            print "$dish[dish_name], \$$dish[price], spicyness $spicy: $dish[is_spicy] <br/>";
+                        }
                     }
 
                     // if(empty($row)){print "empty";};
