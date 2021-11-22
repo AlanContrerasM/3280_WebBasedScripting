@@ -1,0 +1,173 @@
+try {
+
+    $db = new PDO('mysql:host=localhost;dbname=abc','saeed','pass');
+
+ }
+
+catch (?????? $e) {
+
+   print "Couldn't connect to the database: " . $e->getMessage();
+
+}
+Selected Answer: 	
+Correct PDOException 
+
+
+
+
+Given the following piece of code:
+
+print "The price is, \$" . $_COOKIE['price'];
+
+We get the following output:
+
+The price is 23
+
+write do you write in place of ??????? in the following code? (do not type any space and write comma or semi-colon if needed)
+
+setcookie(???????);
+Selected Answer: 	
+Correct 'price',23 
+
+
+
+
+$x = 0;
+
+$x = isset($x) ? 9 : 7; 
+Selected Answer: 	
+Corect 9
+
+
+
+
+
+
+Given the following HTML code, Replace ??????????? with a PHP code that captures the user input for its date of birth. (Do not use any space in your answer and write semi-colon if needed)
+
+<form method="post" action="abc.php">
+
+Name: <input id="user_name" name="full_name" />
+
+BirthDate <input id="bd" name="b_date" />
+
+</form>
+
+
+<?php
+
+print "The user birth date is " . ???????????
+
+?>
+Selected Answer: 	
+Correct $_POST['b_date']; 
+
+
+
+
+
+Given the following HTML code, Replace ??????????? with a PHP code that captures the user input for its date of birth. (Do not use any space in your answer and write semi-colon if needed)
+
+<form method="get" action="abc.php">
+
+Name: <input id="user_name" name="full_name" />
+
+BirthDate <input id="bd" name="b_date" />
+
+</form>
+
+
+<?php
+
+print "The user birth date is " . ???????????
+
+?>
+Selected Answer: 	
+Correct  $_GET['b_date'];
+
+
+
+
+
+Given the following PHP code, what do you write in place of ?????? in the HTML code? (do not type in any space in your answer and use semi-colon if needed)
+
+foreach ($_POST['abc'] as $x) {
+
+    print $x;
+
+}
+
+<form method="post" action="mn.php">
+
+<select name="??????" multiple>
+
+<option value="1">Op1</option>
+
+</select>
+Selected Answer: 	
+Correct abc[] 
+
+
+
+ 	
+
+Given the following piece of code, what do you wriet in place of ?????? if you want to display EmployeeID of all employees? (do not type any space in your answer and use semi-colon if needed)
+
+$q = $db->query('SELECT employeeId FROM employees');
+
+while ($r = $q->fetch()) {
+
+print "??????\n";
+
+}
+Selected Answer: 	
+Correct $r[employeeId] 
+
+
+
+ 	
+
+Given the following table of data, and the following piece of PHP code, what is the value of x after executing the code? (do not type any space, use semi-colon if needed)
+EmpName
+John
+Mary
+Mike
+Joe
+
+
+$q = $db->query('SELECT EmpName FROM Employee');
+
+$rows = $q->fetchAll();
+
+$x=$rows[0];
+Selected Answer: 	
+Correct John 
+
+
+
+
+
+Given the folllowing piece of code, what is the value of the variable y after executing the following piece of code?
+$x;
+$y = $x ?? 5;
+Selected Answer: 	
+Correct 5 
+
+
+
+
+
+Given the following HTML code, what do you write in place of ?????? in the php code? (Do not type any space in your answer. Use semi-colon if needed)
+
+<form method="post" action="abc.php">
+
+<input name="phone" value="000" />
+
+  
+
+<?php
+
+$ph = filter_input(??????, 'phone', FILTER_VALIDATE_INT);
+Selected Answer: 	
+Correct INPUT_POST 
+
