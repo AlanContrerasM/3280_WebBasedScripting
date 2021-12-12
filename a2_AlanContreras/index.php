@@ -1,4 +1,7 @@
 <?php
+ini_set('error_reporting', E_ALL);
+ini_set( 'display_errors', 1 );
+
 // Refactoring by alan contreras
 require "lib.php";
 display_html_head("Algebraic Expressions");
